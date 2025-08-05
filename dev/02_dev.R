@@ -81,6 +81,7 @@ covrpage::covrpage()
 ## service for your application
 ##
 ## (You'll need GitHub there)
+usethis::git_default_branch_rediscover()
 usethis::use_github()
 
 # GitHub Actions
