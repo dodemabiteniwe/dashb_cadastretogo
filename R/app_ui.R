@@ -38,7 +38,7 @@ app_ui <- function(request) {
                      downloadButton("tableau1-telecharger", "T\u00e9l\u00e9charger donn\u00e9es XLSX")
                    ),
                    mainPanel(
-                     DT::DTOutput("tableau1-table")
+                     DT::DTOutput("tableau1-table", width = "100%")
                    )
                  )
         ),
@@ -47,26 +47,26 @@ app_ui <- function(request) {
                  sidebarLayout(
                    sidebarPanel(
                      mod_filtre_commune_ui("filtre3"),
-                     plotOutput("graph1-plot_donut_pref")
+                     plotOutput("graph1-plot_donut_pref", width = "100%")
                    ),
                    mainPanel(
                      tabsetPanel(
                        tabPanel("Imp\u00f4ts estim\u00e9",
-                                plotly::plotlyOutput("graph1-boxplot"),
-                                plotly::plotlyOutput("graph1-jitter")
+                                plotly::plotlyOutput("graph1-boxplot", width = "100%"),
+                                plotly::plotlyOutput("graph1-jitter", width = "100%")
                        ),
                        tabPanel("Imp\u00f4ts/commune et r\u00e9sum\u00e9 par localit\u00e9",
                                 plotly::plotlyOutput("graph1-barres_commune"),
                                 h4("R\u00e9sum\u00e9 par quartier (localit\u00e9)"),
                                 span(tags$i(h6("La valeur cadastrale (V.C) est en millions de FCFA et l'imp\u00f4t estim\u00e9 (Imp\u00f4t E.) en milliers de FCFA")), style = "color:#045a8d"),
-                                reactable::reactableOutput("graph1-table_quartiers")
+                                reactable::reactableOutput("graph1-table_quartiers", width = "100%")
                        ),
                        tabPanel("Valeur Cadastrale/affectation",
-                                plotly::plotlyOutput("graph1-barres_affectation")
+                                plotly::plotlyOutput("graph1-barres_affectation", width = "100%")
                        ),
                        tabPanel("Imp\u00f4ts/Type imeuble",
-                                plotly::plotlyOutput("graph1-density"),
-                                plotly::plotlyOutput("graph1-cumul")
+                                plotly::plotlyOutput("graph1-density", width = "100%"),
+                                plotly::plotlyOutput("graph1-cumul", width = "100%")
                        )
                      )
                    )
@@ -92,6 +92,7 @@ golem_add_external_resources <- function() {
   )
 
   tags$head(
+    tags$meta(name = "viewport", content = "width=device-width, initial-scale=1"),
     favicon(),
     bundle_resources(
       path = app_sys("app/www"),
