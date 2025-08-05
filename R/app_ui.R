@@ -9,8 +9,70 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
-    fluidPage(
-      golem::golem_welcome_page() # Remove this line to start building your UI
+    bootstrapPage(
+      navbarPage(
+        theme = shinythemes::shinytheme("cerulean"), collapsible = TRUE,
+        HTML('<a style="text-decoration:none;cursor:default;color:#FFFFFF;" class="active" href="#">Dashboard Cadastre \u2013 OTR Togo</a>'), id = "nav",
+        windowTitle = "Dashboard Cadastre \u2013 OTR Togo",
+
+        tabPanel("Carte",
+                 div(class = "outer",
+                     tags$head(includeCSS(app_sys("app/www/styles.css"))),
+                     leaflet::leafletOutput("carte1-carte", width = "100%", height = "100%"),
+                     absolutePanel(
+                       id = "controls", class = "panel panel-default",
+                       top = 75, left = 55, width = 350, fixed = TRUE,
+                       draggable = TRUE, height = "auto",
+
+                       span(tags$i(h6("Les donn\u00e9es dans cette application sont \u00e0 jour au 30 juin 2025 et concerne que les \u00e9valuations Grand Lom\u00e9 de 2025 pour l'instant. ")), style = "color:#045a8d"),
+                       mod_indicateurs_ui("carte1"),
+                       mod_filtre_commune_ui("filtre1")
+                     )
+                 )
+        ),
+
+        tabPanel("Donn\u00e9es",
+                 sidebarLayout(
+                   sidebarPanel(
+                     mod_filtre_commune_ui("filtre2"),
+                     downloadButton("tableau1-telecharger", "T\u00e9l\u00e9charger donn\u00e9es XLSX")
+                   ),
+                   mainPanel(
+                     DT::DTOutput("tableau1-table")
+                   )
+                 )
+        ),
+
+        tabPanel("Graphiques",
+                 sidebarLayout(
+                   sidebarPanel(
+                     mod_filtre_commune_ui("filtre3"),
+                     plotOutput("graph1-plot_donut_pref")
+                   ),
+                   mainPanel(
+                     tabsetPanel(
+                       tabPanel("Imp\u00f4ts estim\u00e9",
+                                plotly::plotlyOutput("graph1-boxplot"),
+                                plotly::plotlyOutput("graph1-jitter")
+                       ),
+                       tabPanel("Imp\u00f4ts/commune et r\u00e9sum\u00e9 par localit\u00e9",
+                                plotly::plotlyOutput("graph1-barres_commune"),
+                                h4("R\u00e9sum\u00e9 par quartier (localit\u00e9)"),
+                                span(tags$i(h6("La valeur cadastrale (V.C) est en millions de FCFA et l'imp\u00f4t estim\u00e9 (Imp\u00f4t E.) en milliers de FCFA")), style = "color:#045a8d"),
+                                reactable::reactableOutput("graph1-table_quartiers")
+                       ),
+                       tabPanel("Valeur Cadastrale/affectation",
+                                plotly::plotlyOutput("graph1-barres_affectation")
+                       ),
+                       tabPanel("Imp\u00f4ts/Type imeuble",
+                                plotly::plotlyOutput("graph1-density"),
+                                plotly::plotlyOutput("graph1-cumul")
+                       )
+                     )
+                   )
+                 )
+        )
+      )
     )
   )
 }

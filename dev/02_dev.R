@@ -14,31 +14,50 @@
 # Engineering
 
 ## Dependencies ----
+usethis::use_package("leaflet")
+usethis::use_package("dplyr")
+usethis::use_package("ggplot2")
+usethis::use_package("plotly")
+usethis::use_package("reactablefmtr")
+usethis::use_package("reactable")
+usethis::use_package("RColorBrewer")
+usethis::use_package("scales")
+usethis::use_package("shinydashboard")
+usethis::use_package("shinythemes")
+usethis::use_package("shinyWidgets")
+usethis::use_package("magrittr")
+usethis::use_package("openxlsx2")
+usethis::use_package("tidyr")
+usethis::use_package("DT")
+usethis::use_package("shinyBS")
 ## Amend DESCRIPTION with dependencies read from package code parsing
 ## install.packages('attachment') # if needed.
 attachment::att_amend_desc()
 
 ## Add modules ----
 ## Create a module infrastructure in R/
-golem::add_module(name = "name_of_module1", with_test = TRUE) # Name of the module
-golem::add_module(name = "name_of_module2", with_test = TRUE) # Name of the module
+golem::add_module(name = "carte", with_test = TRUE) # Name of the module
+golem::add_module(name = "tableau") # Name of the module
+golem::add_module(name = "filtre_commune") # Name of the module
+golem::add_module(name = "indicateurs") # Name of the module
+golem::add_module(name = "graphiques") # Name of the module
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
-golem::add_fct("helpers", with_test = TRUE)
-golem::add_utils("helpers", with_test = TRUE)
+golem::add_fct("quar_table")
+golem::add_utils("graphs")
 
 ## External resources
 ## Creates .js and .css files at inst/app/www
-golem::add_js_file("script")
-golem::add_js_handler("handlers")
-golem::add_css_file("custom")
-golem::add_sass_file("custom")
-golem::add_any_file("file.json")
+#golem::add_js_file("script")
+#golem::add_js_handler("handlers")
+golem::add_css_file("styles")
+#golem::add_sass_file("custom")
+#golem::add_any_file("file.json")
 
 ## Add internal datasets ----
 ## If you have data in your package
-usethis::use_data_raw(name = "my_dataset", open = FALSE)
+usethis::use_data_raw(name = "mad_cad_cleaned", open = FALSE)
 
 ## Tests ----
 ## Add one line by test you want to create
