@@ -23,6 +23,7 @@ Imports:
     lubridate,
     magrittr,
     openxlsx2,
+    pkgload,
     plotly,
     reactable,
     reactablefmtr,
